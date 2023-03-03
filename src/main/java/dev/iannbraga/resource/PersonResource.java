@@ -25,23 +25,6 @@ public class PersonResource {
     @Inject
     private PersonRepository personRepository;
 
-    @GET
-    public List<Person> listAll() {
-        return personRepository.findAll().list();
-    }
-
-    @GET
-    @Path("/{id}")
-    public Person getById(@PathParam("id") Long id) {
-        return personRepository.findById(id);
-    }
-
-    @GET
-    @Path("/search/{name}")
-    public List<Person> getByName(@PathParam("name") String name) {
-        return personRepository.findByName(name);
-    }
-
     @POST
     @Transactional
     public Person save(Person newPerson){
@@ -66,6 +49,23 @@ public class PersonResource {
             }else {
                 return "Not found";
             }
+    }
+
+    @GET
+    public List<Person> listAll() {
+        return personRepository.findAll().list();
+    }
+
+    @GET
+    @Path("/{id}")
+    public Person getById(@PathParam("id") Long id) {
+        return personRepository.findById(id);
+    }
+
+    @GET
+    @Path("/search/{name}")
+    public List<Person> getByName(@PathParam("name") String name) {
+        return personRepository.findByName(name);
     }
 
     private Person validatePerson(Long id, Person receivedPerson){

@@ -11,7 +11,9 @@ import io.quarkus.hibernate.orm.panache.PanacheRepository;
 public class PersonRepository implements PanacheRepository<Person>{
 
     public List<Person> findByName(String name) {
-        return find("first_name", name).list();
+        String like = "%"+name+"%";
+        
+        return find("first_name like ?1", like).list();
     }
     
 }
