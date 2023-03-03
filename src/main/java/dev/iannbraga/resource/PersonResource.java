@@ -26,7 +26,7 @@ public class PersonResource {
     private PersonRepository personRepository;
 
     @GET
-    public List<Person> hello() {
+    public List<Person> listAll() {
         return personRepository.findAll().list();
     }
 
@@ -34,6 +34,12 @@ public class PersonResource {
     @Path("/{id}")
     public Person getById(@PathParam("id") Long id) {
         return personRepository.findById(id);
+    }
+
+    @GET
+    @Path("/search/{name}")
+    public List<Person> getByName(@PathParam("name") String name) {
+        return personRepository.findByName(name);
     }
 
     @POST
@@ -47,15 +53,19 @@ public class PersonResource {
     @Path("/{id}")
     @Transactional
     public Person update(@PathParam("id") Long id, Person receivedPerson){
-        // Person persistedPerson = personRepository.findById(id);
-        // persistedPerson.setFirstName(receivedPerson.getFirstName());
-        // persistedPerson.setLastName(receivedPerson.getLastName());
-        // persistedPerson.setEmail(receivedPerson.getEmail());
-        // persistedPerson.setCpf(receivedPerson.getCpf());
-        // persistedPerson.setPassword(receivedPerson.getPassword());
-
         return validatePerson(id, receivedPerson);
 
+    }
+
+    @DELETE
+    @Path("/{id}")
+    @Transactional
+    public String deleteById(@PathParam("id") Long id){
+            if(personRepository.deleteById(id)){
+                return "Deleted with success";
+            }else {
+                return "Not found";
+            }
     }
 
     private Person validatePerson(Long id, Person receivedPerson){
@@ -78,16 +88,5 @@ public class PersonResource {
         }
 
         return persistedPerson;
-    }
-
-    @DELETE
-    @Path("/{id}")
-    @Transactional
-    public String deleteById(@PathParam("id") Long id){
-            if(personRepository.deleteById(id)){
-                return "Deleted with success";
-            }else {
-                return "Not found";
-            }
     }
 }
