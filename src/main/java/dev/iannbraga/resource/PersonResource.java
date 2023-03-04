@@ -53,7 +53,8 @@ public class PersonResource {
 
     @GET
     public List<Person> listAll() {
-        return personRepository.findAll().list();
+        // return personRepository.findAll().list();
+        return personRepository.findAllPeople();
     }
 
     @GET
