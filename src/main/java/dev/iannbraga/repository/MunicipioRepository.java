@@ -16,7 +16,7 @@ public class MunicipioRepository implements PanacheRepository<Municipio>{
         return find("name like ?1", like).list();
     }
 
-    public List<Municipio> findAllPeople() {
+    public List<Municipio> findAllOrdenated() {
         return find("order by id").list();
     }
 }

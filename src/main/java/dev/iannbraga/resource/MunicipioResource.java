@@ -20,7 +20,7 @@ import dev.iannbraga.entity.Municipio;
 import dev.iannbraga.repository.EstadoRepository;
 import dev.iannbraga.repository.MunicipioRepository;
 
-@Path("/municipio")
+@Path("/municipios")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class MunicipioResource {
@@ -33,7 +33,7 @@ public class MunicipioResource {
 
     @POST
     @Transactional
-    public Municipio save(MunicipioDTO dto){
+    public MunicipioResponseDTO save(MunicipioDTO dto){
         
         Municipio entity = new Municipio();
 
@@ -42,7 +42,7 @@ public class MunicipioResource {
         
         municipioRepository.persist(entity);
         
-        return entity;  
+        return new MunicipioResponseDTO(entity);  
     }
 
     @DELETE
@@ -57,12 +57,6 @@ public class MunicipioResource {
     }
 
     @GET
-    public List<Municipio> listAllOrderById() {
-        return municipioRepository.findAllPeople();
-    }
-
-    @GET
-    @Path("/dto")
     public List<MunicipioResponseDTO> listDTO() {
         List<MunicipioResponseDTO> municipios = municipioRepository.findAll()
         .stream().map(
@@ -74,35 +68,16 @@ public class MunicipioResource {
 
     @GET
     @Path("/{id}")
-    public Municipio getById(@PathParam("id") Long id) {
-        return municipioRepository.findById(id);
+    public MunicipioResponseDTO getById(@PathParam("id") Long id) {
+        Municipio entity = municipioRepository.findById(id); 
+        return new MunicipioResponseDTO(entity);
     }
 
     @GET
     @Path("/search/{name}")
-    public List<Municipio> getByName(@PathParam("name") String name) {
-        return municipioRepository.findByName(name);
+    public List<MunicipioResponseDTO> getByName(@PathParam("name") String name) {
+        List<MunicipioResponseDTO> finded = municipioRepository.findByName(name).stream()
+        .map(m -> new MunicipioResponseDTO(m)).collect(Collectors.toList());
+        return finded;
     }
-
-    // private Municipio validateMunicipio(Long id, Municipio receivedMunicipio){
-    //     Municipio persistedMunicipio = MunicipioRepository.findById(id);
-        
-    //     if(receivedMunicipio.getFirstName() != null && !receivedMunicipio.getFirstName().isBlank()){
-    //         persistedMunicipio.setFirstName(receivedMunicipio.getFirstName());
-    //     }
-    //     if(receivedMunicipio.getLastName() != null && !receivedMunicipio.getLastName().isBlank()){
-    //         persistedMunicipio.setLastName(receivedMunicipio.getLastName());
-    //     }            
-    //     if(receivedMunicipio.getEmail() != null && !receivedMunicipio.getEmail().isBlank()){
-    //         persistedMunicipio.setEmail(receivedMunicipio.getEmail());
-    //     }
-    //     if(receivedMunicipio.getCpf() != null && !receivedMunicipio.getCpf().isBlank()){
-    //         persistedMunicipio.setCpf(receivedMunicipio.getCpf());
-    //     }
-    //     if(receivedMunicipio.getPassword() != null && !receivedMunicipio.getPassword().isBlank()){
-    //         persistedMunicipio.setPassword(receivedMunicipio.getPassword());
-    //     }
-
-    //     return persistedMunicipio;
-    // }
 }

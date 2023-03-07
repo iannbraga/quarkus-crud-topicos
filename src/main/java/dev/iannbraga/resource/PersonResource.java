@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 import dev.iannbraga.entity.Person;
 import dev.iannbraga.repository.PersonRepository;
 
-@Path("/person")
+@Path("/people")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class PersonResource {

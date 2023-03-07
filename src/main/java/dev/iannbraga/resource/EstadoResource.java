@@ -16,7 +16,7 @@ import javax.ws.rs.core.MediaType;
 import dev.iannbraga.entity.Estado;
 import dev.iannbraga.repository.EstadoRepository;
 
-@Path("/estado")
+@Path("/estados")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class EstadoResource {

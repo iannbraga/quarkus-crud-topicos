@@ -17,7 +17,7 @@ import javax.ws.rs.core.MediaType;
 import dev.iannbraga.entity.Product;
 import dev.iannbraga.repository.ProductRepository;
 
-@Path("/product")
+@Path("/products")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
 public class ProductResource {
